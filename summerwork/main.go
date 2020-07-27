@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/julienschmidt/httprouter"
+
 	"summerwork/jxp"
 )
 func main(){
 	r := jxp.Defalut()
 
-	a:=httprouter.New()
-	a.GET()
+
+
 	//开个路由组
 	router := r.Group("/jxp")
 	{

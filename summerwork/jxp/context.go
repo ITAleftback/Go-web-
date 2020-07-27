@@ -33,7 +33,16 @@ type Context struct {
 
 type HandlerFunc func(*Context)
 
+//这个时候需要将silce中的hander依次取出来调用
+func (c *Context) Next() {
+	c.index++
+	//   一般来说 除了最后一个函数  前面的都是中间件
+	s := int8(len(c.handlers))
+	for ; c.index < s; c.index++ {
+		c.handlers[c.index](c)
+	}
 
+}
 //
 func (c *Context) String(code int, msg string) {
 	c.Writer.Header().Set("Content-Type", "text/plain")
@@ -52,16 +61,7 @@ func (c *Context) JSON(code int, obj interface{}) {
 	}
 }
 
-//这个时候需要将silce中的hander依次取出来调用
-func (c *Context) Next() {
-	c.index++
-	//   一般来说 除了最后一个函数  前面的都是中间件
-	s := int8(len(c.handlers))
-	for ; c.index < s; c.index++ {
-		c.handlers[c.index](c)
-	}
 
-}
 
 //拿参数
 func (c *Context) PostForm(key string) string {

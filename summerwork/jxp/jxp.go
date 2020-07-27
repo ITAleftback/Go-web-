@@ -146,15 +146,15 @@ func (group *RouterGroup) NewContext(w http.ResponseWriter, req *http.Request, p
 //这个是将多个handler聚合，然后一块传入到router，作用就是将当前的Handler和新来的handler整合
 func (group *RouterGroup) CombineHandlers(handlers []HandlerFunc) []HandlerFunc {
 	lens := len(group.Handlers) + len(handlers)
-	h := make([]HandlerFunc,0, lens)
-	h = append(h, group.Handlers...)
-	h = append(h, handlers...)
-	return h
+	handlerss := make([]HandlerFunc,0, lens)
+	handlerss = append(handlerss, group.Handlers...)
+	handlerss = append(handlerss, handlers...)
+	return handlerss
 }
 
 
 
-//==========================请求头==========================
+//==========================method==========================
 
 // 请求头的作用还有是 将前面的路径整合起来  然后将对应的路径和 handler加入到httprouter
 func (group *RouterGroup) POST(path string, handlers ...HandlerFunc) {
